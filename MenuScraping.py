@@ -1,12 +1,13 @@
-import re
-from playwright.sync_api import Page
+class Ingredient:
+    def __init__(self, item, quantity):
+        self.item = item
+        self.quantity = quantity
 
 
-def test_homepage_has_Playwright_in_title_and_get_started_link_linking_to_the_intro_page(page: Page):
-    menuIdList = [705651, 708962]
-
-    for menuId in menuIdList:
-        getMenu(page, menuId)
+class Menu:
+    def __init__(self, title, ingredient):
+        self.title = title
+        self.Ingredient = ingredient
 
 
 def getMenu(page, menuId):
@@ -32,11 +33,6 @@ def getMenu(page, menuId):
     )
     menuTitle = menuTitleLocator.all_inner_texts()
 
-    print("\n")
-    print("------------------------------------------")
-    print(menuTitle)
-    print("------------------------------------------")
-
     menuIngredientItemLocator = page.locator(
         recipeCardXpath +
         "div[@class ='recipeCardSpOrderWrap']/"
@@ -46,11 +42,6 @@ def getMenu(page, menuId):
         "dl/dt"
     )
     menuIngredientItem = menuIngredientItemLocator.all_inner_texts()
-
-    print("\n")
-    print("------------------------------------------")
-    print(menuIngredientItem)
-    print("------------------------------------------")
 
     menuIngredientQuantityLocator = page.locator(
         recipeCardXpath +
@@ -62,7 +53,10 @@ def getMenu(page, menuId):
     )
     menuIngredientQuantity = menuIngredientQuantityLocator.all_inner_texts()
 
-    print("\n")
-    print("------------------------------------------")
-    print(menuIngredientQuantity)
-    print("------------------------------------------")
+    return Menu(
+        menuTitle[len(menuTitle) - 1],
+        Ingredient(
+            menuIngredientItem,
+            menuIngredientQuantity,
+        )
+    )
