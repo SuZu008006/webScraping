@@ -1,5 +1,6 @@
 import os
 
+from _pytest import unittest
 from playwright.sync_api import Page
 
 from MenuScrapingRepository import Menu, Ingredient, MenuScrapingRepository
@@ -7,6 +8,30 @@ from MenuScrapingController import MenuScrapingController
 from MenuScrapingService import MenuScrapingService
 from SpyStubMenuScrapingService import SpyStubMenuScrapingService
 from SpyStubMenuScrapingRepository import SpyStubMenuScrapingRepository
+
+
+def test_menuScraping(page: Page):
+    menuIdList = [
+        705651,
+        708962,
+        705645,
+        707841,
+        708846,
+        702969,
+        705346,
+        700595,
+        706594,
+        800030,
+    ]
+
+    menuScrapingRepository = MenuScrapingRepository(page)
+
+    menuScrapingService = MenuScrapingService(menuScrapingRepository)
+
+    menuScrapingController = MenuScrapingController(menuScrapingService)
+    menuScrapingController.saveMenu(menuIdList)
+    menuScrapingController.saveIngredient(menuIdList)
+
 
 
 def test_menuScrapingRepository(page: Page):
@@ -18,13 +43,13 @@ def test_menuScrapingRepository(page: Page):
     expectedMenuIngredientQuantity = ['1枚（250g）', '300g']
 
 
-    menu = menuScrapingRepository.getMenu(menuIdList)
+    menuList = menuScrapingRepository.getMenu(menuIdList)
 
 
     for index, menuId in enumerate(menuIdList):
-        assert menu[index].title == expectedMenuTitle[index]
-        assert menu[index].Ingredient.item[0] == expectedMenuIngredientItem[index]
-        assert menu[index].Ingredient.quantity[0] == expectedMenuIngredientQuantity[index]
+        assert menuList[index].title == expectedMenuTitle[index]
+        assert menuList[index].Ingredient.item[0] == expectedMenuIngredientItem[index]
+        assert menuList[index].Ingredient.quantity[0] == expectedMenuIngredientQuantity[index]
 
 
 def test_menuScrapingService():
