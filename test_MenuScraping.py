@@ -1,6 +1,5 @@
 import os
 
-from _pytest import unittest
 from playwright.sync_api import Page
 
 from MenuScrapingRepository import Menu, Ingredient, MenuScrapingRepository
@@ -28,10 +27,9 @@ def test_menuScraping(page: Page):
 
     menuScrapingService = MenuScrapingService(menuScrapingRepository)
 
-    menuScrapingController = MenuScrapingController(menuScrapingService)
-    menuScrapingController.saveMenu(menuIdList)
-    menuScrapingController.saveIngredient(menuIdList)
-
+    menuScrapingController = MenuScrapingController(menuScrapingService, menuIdList)
+    menuScrapingController.saveMenu()
+    menuScrapingController.saveIngredient()
 
 
 def test_menuScrapingRepository(page: Page):
@@ -42,64 +40,16 @@ def test_menuScrapingRepository(page: Page):
     expectedMenuIngredientItem = ['鶏もも肉・または鶏ももから揚げ用肉', '鶏むね肉']
     expectedMenuIngredientQuantity = ['1枚（250g）', '300g']
 
-
     menuList = menuScrapingRepository.getMenu(menuIdList)
-
 
     for index, menuId in enumerate(menuIdList):
         assert menuList[index].title == expectedMenuTitle[index]
         assert menuList[index].Ingredient.item[0] == expectedMenuIngredientItem[index]
-        assert menuList[index].Ingredient.quantity[0] == expectedMenuIngredientQuantity[index]
-
-
-def test_menuScrapingService():
-    menuIdList = [111111, 222222]
-
-    spyStubMenuScrapingRepository = SpyStubMenuScrapingRepository()
-
-    menuList = [
-        Menu(
-            'menuTitleOne',
-            Ingredient(
-                ['itemOneOne', 'itemOneTwo'],
-                ['11', '12']
-            )
-        ),
-        Menu(
-            'menuTitleTwo',
-            Ingredient(
-                ['itemTwoOne', 'itemTwoTwo', 'itemTwoThree'],
-                ['21', '22', '23']
-            )
-        )
-    ]
-    spyStubMenuScrapingRepository.menuList_returnValue = menuList
-
-    menuScrapingService = MenuScrapingService(spyStubMenuScrapingRepository)
-
-
-    actualMenuOutput = menuScrapingService.convertMenu(menuIdList)
-
-
-    expectedMenuBase = [
-        [1, 'menuTitleOne'],
-        [2, 'menuTitleTwo'],
-    ]
-
-    expectedMenuIngredient = [
-        [1, 1, 'itemOneOne', '11'],
-        [2, 1, 'itemOneTwo', '12'],
-        [3, 2, 'itemTwoOne', '21'],
-        [4, 2, 'itemTwoTwo', '22'],
-        [5, 2, 'itemTwoThree', '23'],
-    ]
-
-    assert actualMenuOutput.menuBase == expectedMenuBase
-    assert actualMenuOutput.menuIngredient == expectedMenuIngredient
+        assert menuList[index].Ingredient.content[0] == expectedMenuIngredientQuantity[index]
 
 
 def test_menuScrapingController_menuBaseCsv():
-    menuIdList = [111111, 222222]
+    menuIdList = []
     spyStubMenuScrapingService = SpyStubMenuScrapingService([])
 
     menuBaseList_returnValue = [
@@ -108,11 +58,9 @@ def test_menuScrapingController_menuBaseCsv():
     ]
     spyStubMenuScrapingService.menuBaseList_returnValue = menuBaseList_returnValue
 
-    menuScrapingController = MenuScrapingController(spyStubMenuScrapingService)
+    menuScrapingController = MenuScrapingController(spyStubMenuScrapingService, menuIdList)
 
-
-    menuScrapingController.saveMenu(menuIdList)
-
+    menuScrapingController.saveMenu()
 
     with open(f'{os.getcwd()}/csvContainer/menuBase.csv', 'r') as csvMenuBase:
         actualMenuBase = csvMenuBase.read()
@@ -123,27 +71,25 @@ def test_menuScrapingController_menuBaseCsv():
 
 
 def test_menuScrapingController_menuIngredientCsv():
-    menuIdList = [111111, 222222]
+    menuIdList = []
     spyStubMenuScrapingService = SpyStubMenuScrapingService(menuIdList)
 
     menuIngredientList_returnValue = [
-        [1, 1, 'itemOneOne', '11'],
-        [2, 1, 'itemOneTwo', '12'],
-        [3, 2, 'itemTwoOne', '21'],
-        [4, 2, 'itemTwoTwo', '22'],
-        [5, 2, 'itemTwoThree', '23'],
+        [1, 1, 'itemOneOne', 11, 'g'],
+        [2, 1, 'itemOneTwo', 12, 'g'],
+        [3, 2, 'itemTwoOne', 21, 'g'],
+        [4, 2, 'itemTwoTwo', 22, 'g'],
+        [5, 2, 'itemTwoThree', 23, 'g'],
     ]
     spyStubMenuScrapingService.menuIngredientList_returnValue = menuIngredientList_returnValue
 
-    menuScrapingController = MenuScrapingController(spyStubMenuScrapingService)
+    menuScrapingController = MenuScrapingController(spyStubMenuScrapingService, menuIdList)
 
-
-    menuScrapingController.saveIngredient(menuIdList)
-
+    menuScrapingController.saveIngredient()
 
     with open(f'{os.getcwd()}/csvContainer/menuIngredient.csv', 'r') as csvMenuBase:
         actualMenuBase = csvMenuBase.read()
 
         assert len(actualMenuBase.splitlines()) == 6
-        assert actualMenuBase.splitlines()[0].split(',') == ['ingredient_id', 'id', 'item', 'quantity']
-        assert actualMenuBase.splitlines()[1].split(',') == ['1', '1', 'itemOneOne', '11']
+        assert actualMenuBase.splitlines()[0].split(',') == ['ingredient_id', 'id', 'item', 'quantity', 'scale']
+        assert actualMenuBase.splitlines()[1].split(',') == ['1', '1', 'itemOneOne', '11', 'g']

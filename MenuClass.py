@@ -11,6 +11,6 @@ class Menu:
 
 
 class Ingredient:
-    def __init__(self, item, quantity):
+    def __init__(self, item, content):
         self.item = item
-        self.quantity = quantity
+        self.content = content
