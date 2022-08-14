@@ -13,7 +13,9 @@ class MenuScrapingService:
     def __init__(self, menuScrapingRepository):
         self.menuBase = []
         self.menuIngredient = []
-        self.ingredientMasterIndex = 0
+        self.menuSeasoning = []
+        self.ingredientIndex = 0
+        self.seasoningIndex = 0
         self.menuScrapingRepository = menuScrapingRepository
 
     def convertMenu(self, menuIdList):
@@ -88,21 +90,44 @@ class MenuScrapingService:
                     menu.title,
                 ]
             )
-            for ingredientIndex, ingredient in enumerate(menu.Ingredient.item):
-                ingredientContent = divideContentOnQuantityAndScale(menu.Ingredient.content[ingredientIndex])
-                self.menuIngredient.append(
-                    [
-                        self.ingredientMasterIndex + 1,
-                        menuIndex + 1,
-                        menu.Ingredient.item[ingredientIndex],
-                        ingredientContent.quantity,
-                        ingredientContent.scale,
-                    ]
+            for materialIndex, material in enumerate(menu.Material.item):
+                materialContent = divideContentOnQuantityAndScale(
+                    menu.Material.content[materialIndex]
                 )
-                self.ingredientMasterIndex = self.ingredientMasterIndex + 1
+
+                seasoningPatternList = 'ml|適量|少々'
+                isSeasoning = bool(
+                    re
+                    .compile(seasoningPatternList)
+                    .search(materialContent.scale)
+                )
+
+                if isSeasoning:
+                    self.menuSeasoning.append(
+                        [
+                            self.seasoningIndex + 1,
+                            menuIndex + 1,
+                            material,
+                            materialContent.quantity,
+                            materialContent.scale,
+                        ]
+                    )
+                    self.seasoningIndex = self.seasoningIndex + 1
+                else:
+                    self.menuIngredient.append(
+                        [
+                            self.ingredientIndex + 1,
+                            menuIndex + 1,
+                            material,
+                            materialContent.quantity,
+                            materialContent.scale,
+                        ]
+                    )
+                    self.ingredientIndex = self.ingredientIndex + 1
 
         return MenuStruct(
             self.menuBase,
             self.menuIngredient,
+            self.menuSeasoning
         )
 

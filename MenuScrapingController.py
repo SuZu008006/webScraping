@@ -20,3 +20,11 @@ class MenuScrapingController:
             writer = csv.writer(csvMenuIngredient)
             writer.writerow(['ingredient_id', 'id', 'item', 'quantity', 'scale'])
             writer.writerows(menuIngredient)
+
+    def saveSeasoning(self):
+        menuSeasoning = self.menuStruct.menuSeasoning
+        with open(f'{self.writePath}/csvContainer/menuSeasoning.csv', 'w') as csvMenuSeasoning:
+            writer = csv.writer(csvMenuSeasoning)
+            writer.writerow(['seasoning_id', 'id', 'item', 'quantity', 'scale'])
+            writer.writerows(menuSeasoning)
+

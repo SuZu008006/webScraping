@@ -1,4 +1,4 @@
-from MenuClass import Menu, Ingredient
+from MenuClass import Menu, Material
 
 
 class MenuScrapingRepository:
@@ -55,7 +55,7 @@ class MenuScrapingRepository:
             menu.append(
                 Menu(
                     menuTitle[len(menuTitle) - 1],
-                    Ingredient(
+                    Material(
                         menuIngredientItem,
                         menuIngredientQuantity,
                     )
