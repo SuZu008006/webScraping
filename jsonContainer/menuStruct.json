@@ -1,0 +1,26 @@
+[
+    {
+        "menuRecord": {
+            "title": "menuTitleOne"
+        },
+        "ingredientRecord": [
+            {
+                "item": "test1",
+                "quantity": 11,
+                "scale": "test1"
+            },
+            {
+                "item": "test2",
+                "quantity": 11,
+                "scale": "test2"
+            }
+        ],
+        "seasoningRecord": [
+            {
+                "item": "test3",
+                "quantity": 11,
+                "scale": "test3"
+            }
+        ]
+    }
+]
