@@ -13,11 +13,11 @@ def test_menuScraping(page: Page):
         705645,
         707841,
         708846,
-        # 702969,
-        # 705346,
-        # 700595,
-        # 706594,
-        # 800030,
+        702969,
+        705346,
+        700595,
+        706594,
+        800030,
     ]
 
     menuScrapingRepository = MenuScrapingRepository(page)
@@ -25,9 +25,7 @@ def test_menuScraping(page: Page):
     menuScrapingService = MenuScrapingService(menuScrapingRepository)
 
     menuScrapingController = MenuScrapingController(menuScrapingService, menuIdList)
-    menuScrapingController.saveMenu()
-    menuScrapingController.saveIngredient()
-    menuScrapingController.saveSeasoning()
+    menuScrapingController.saveMenuStruct()
 
 @pytest.mark.skipif(True, reason="不用意なスクレイピングの防止のため")
 def test_menuScrapingRepository(page: Page):

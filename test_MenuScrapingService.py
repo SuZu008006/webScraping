@@ -1,6 +1,6 @@
 import unittest
 
-from MenuClass import Menu, Material
+from MenuClass import MenuTmp, Material
 from MenuScrapingService import MenuScrapingService
 from SpyStubMenuScrapingRepository import SpyStubMenuScrapingRepository
 
@@ -12,14 +12,14 @@ class TestMenuScrapingService(unittest.TestCase):
 
     def test_seasoning_spoonScale(self):
         menuList = [
-            Menu(
+            MenuTmp(
                 'menuTitleOne',
                 Material(
                     ['itemOneOne', 'itemOneTwo', 'itemOneThree', 'itemOneFour'],
                     ['大さじ1', '小さじ2', '小さじ2（10g）', '大さじ1（15g）']
                 )
             ),
-            Menu(
+            MenuTmp(
                 'menuTitleTwo',
                 Material(
                     ['itemTwoOne', 'itemTwoTwo', 'itemTwoThree', 'itemTwoFour'],
@@ -36,63 +36,116 @@ class TestMenuScrapingService(unittest.TestCase):
         TABLE_SPOON_UNIT = 15
         TEA_SPOON_UNIT = 5
 
-        expectedMenuBase = [
-            [1, 'menuTitleOne'],
-            [2, 'menuTitleTwo'],
+        expectedMenuStruct = [
+            {
+                'menuRecord': {
+                    'title': 'menuTitleOne'
+                },
+                'ingredientRecord': [],
+                'seasoningRecord': [
+                    {
+                        'item': 'itemOneOne',
+                        'quantity': TABLE_SPOON_UNIT*1,
+                        'scale': 'ml'
+                    },
+                    {
+                        'item': 'itemOneTwo',
+                        'quantity': TEA_SPOON_UNIT*2,
+                        'scale': 'ml'
+                    },
+                    {
+                        'item': 'itemOneThree',
+                        'quantity': TEA_SPOON_UNIT*2,
+                        'scale': 'ml'
+                    },
+                    {
+                        'item': 'itemOneFour',
+                        'quantity': TABLE_SPOON_UNIT*1,
+                        'scale': 'ml'
+                    }
+                ]
+            },
+            {
+                'menuRecord': {
+                    'title': 'menuTitleTwo'
+                },
+                'ingredientRecord': [],
+                'seasoningRecord': [
+                    {
+                        'item': 'itemTwoOne',
+                        'quantity': TABLE_SPOON_UNIT*1.5,
+                        'scale': 'ml'
+                    },
+                    {
+                        'item': 'itemTwoTwo',
+                        'quantity': TEA_SPOON_UNIT*2.25,
+                        'scale': 'ml'
+                    },
+                    {
+                        'item': 'itemTwoThree',
+                        'quantity': TABLE_SPOON_UNIT*0.5,
+                        'scale': 'ml'
+                    },
+                    {
+                        'item': 'itemTwoFour',
+                        'quantity': TEA_SPOON_UNIT*0.25,
+                        'scale': 'ml'
+                    }
+                ]
+            }
         ]
 
-        expectedMenuIngredient = []
-
-        expectedMenuSeasoning = [
-            [1, 1, 'itemOneOne', TABLE_SPOON_UNIT * 1, 'ml'],
-            [2, 1, 'itemOneTwo', TEA_SPOON_UNIT * 2, 'ml'],
-            [3, 1, 'itemOneThree', TEA_SPOON_UNIT * 2, 'ml'],
-            [4, 1, 'itemOneFour', TABLE_SPOON_UNIT * 1, 'ml'],
-            [5, 2, 'itemTwoOne', TABLE_SPOON_UNIT * 1.5, 'ml'],
-            [6, 2, 'itemTwoTwo', TEA_SPOON_UNIT * 2.25, 'ml'],
-            [7, 2, 'itemTwoThree', TABLE_SPOON_UNIT * 0.5, 'ml'],
-            [8, 2, 'itemTwoFour', TEA_SPOON_UNIT * 0.25, 'ml'],
-        ]
-
-        self.assertEqual(expectedMenuBase, actualMenuOutput.menuBase)
-        self.assertEqual(expectedMenuIngredient , actualMenuOutput.menuIngredient)
-        self.assertEqual(expectedMenuSeasoning , actualMenuOutput.menuSeasoning)
+        self.assertEqual(expectedMenuStruct, actualMenuOutput)
 
     def test_seasoning_cup(self):
-            menuList = [
-                Menu(
-                    'menuTitleOne',
-                    Material(
-                        ['itemOneOne', 'itemOneTwo', 'itemOneThree'],
-                        ['1カップ', '1/4カップ', '1カップ・1/2']
-                    )
-                ),
-            ]
-            self.spyStubMenuScrapingRepository.menuList_returnValue = menuList
+        menuList = [
+            MenuTmp(
+                'menuTitleOne',
+                Material(
+                    ['itemOneOne', 'itemOneTwo', 'itemOneThree'],
+                    ['1カップ', '1/4カップ', '1カップ・1/2']
+                )
+            ),
+        ]
+        self.spyStubMenuScrapingRepository.menuList_returnValue = menuList
 
-            menuScrapingService = MenuScrapingService(self.spyStubMenuScrapingRepository)
+        menuScrapingService = MenuScrapingService(self.spyStubMenuScrapingRepository)
 
-            actualMenuOutput = menuScrapingService.convertMenu(self.menuIdList)
+        actualMenuOutput = menuScrapingService.convertMenu(self.menuIdList)
 
-            expectedMenuBase = [
-                [1, 'menuTitleOne'],
-            ]
+        CUP = 200
 
-            expectedMenuIngredient = []
+        expectedMenuStruct = [
+            {
+                'menuRecord': {
+                    'title': 'menuTitleOne'
+                },
+                'ingredientRecord': [],
+                'seasoningRecord': [
+                    {
+                        'item': 'itemOneOne',
+                        'quantity': CUP * 1,
+                        'scale': 'ml'
+                    },
+                    {
+                        'item': 'itemOneTwo',
+                        'quantity': CUP * 0.25,
+                        'scale': 'ml'
+                    },
+                    {
+                        'item': 'itemOneThree',
+                        'quantity': CUP * 1.5,
+                        'scale': 'ml'
+                    },
+                ]
+            },
+        ]
 
-            expectedMenuSeasoning = [
-                [1, 1, 'itemOneOne', 200, 'ml'],
-                [2, 1, 'itemOneTwo', 50, 'ml'],
-                [3, 1, 'itemOneThree', 300, 'ml'],
-            ]
-
-            self.assertEqual(expectedMenuBase, actualMenuOutput.menuBase)
-            self.assertEqual(expectedMenuIngredient, actualMenuOutput.menuIngredient)
-            self.assertEqual(expectedMenuSeasoning, actualMenuOutput.menuSeasoning)
+        self.assertEqual(expectedMenuStruct, actualMenuOutput)
 
     def test_seasoning_amountOfYourChoice(self):
         menuList = [
-            Menu(
+            MenuTmp(
                 'menuTitleOne',
                 Material(
                     ['itemOneOne', 'itemOneTwo'],
@@ -106,24 +159,32 @@ class TestMenuScrapingService(unittest.TestCase):
 
         actualMenuOutput = menuScrapingService.convertMenu(self.menuIdList)
 
-        expectedMenuBase = [
-            [1, 'menuTitleOne'],
+        expectedMenuStruct = [
+            {
+                'menuRecord': {
+                    'title': 'menuTitleOne'
+                },
+                'ingredientRecord': [],
+                'seasoningRecord': [
+                    {
+                        'item': 'itemOneOne',
+                        'quantity': 1,
+                        'scale': '適量'
+                    },
+                    {
+                        'item': 'itemOneTwo',
+                        'quantity': 1,
+                        'scale': '少々'
+                    },
+                ]
+            },
         ]
 
-        expectedMenuIngredient = []
-
-        expectedMenuSeasoning = [
-            [1, 1, 'itemOneOne', 1, '適量'],
-            [2, 1, 'itemOneTwo', 1, '少々'],
-        ]
-
-        self.assertEqual(expectedMenuBase, actualMenuOutput.menuBase)
-        self.assertEqual(expectedMenuIngredient, actualMenuOutput.menuIngredient)
-        self.assertEqual(expectedMenuSeasoning, actualMenuOutput.menuSeasoning)
+        self.assertEqual(expectedMenuStruct, actualMenuOutput)
 
     def test_ingredient_gramDesignationOnly(self):
         menuList = [
-            Menu(
+            MenuTmp(
                 'menuTitleOne',
                 Material(
                     ['itemOneOne', 'itemOneTwo'],
@@ -137,35 +198,47 @@ class TestMenuScrapingService(unittest.TestCase):
 
         actualMenuOutput = menuScrapingService.convertMenu(self.menuIdList)
 
-        expectedMenuBase = [
-            [1, 'menuTitleOne'],
+        expectedMenuStruct = [
+            {
+                'menuRecord': {
+                    'title': 'menuTitleOne'
+                },
+                'ingredientRecord': [
+                    {
+                        'item': 'itemOneOne',
+                        'quantity': 100,
+                        'scale': 'g'
+                    },
+                    {
+                        'item': 'itemOneTwo',
+                        'quantity': 200,
+                        'scale': 'g'
+                    },
+                ],
+                'seasoningRecord': []
+            },
         ]
 
-        expectedMenuMaterial = [
-            [1, 1, 'itemOneOne', 100, 'g'],
-            [2, 1, 'itemOneTwo', 200, 'g'],
-        ]
-
-        self.assertEqual(expectedMenuBase, actualMenuOutput.menuBase)
-        self.assertEqual(expectedMenuMaterial, actualMenuOutput.menuIngredient)
+        self.assertEqual(expectedMenuStruct, actualMenuOutput)
 
     def test_ingredient_uniqueScale(self):
         UNIQUE_SCALE_LIST = ['箱', '本', '個', '枚', '玉', '缶', '袋', 'かけ分', '株', 'cm']
 
         for uniqueScale in UNIQUE_SCALE_LIST:
             menuList = [
-                Menu(
+                MenuTmp(
                     'menuTitleOne',
                     Material(
                         ['itemOneOne', 'itemOneTwo', 'itemOneThree'],
-                        ['1'+uniqueScale, '1/4'+uniqueScale, '1'+uniqueScale+'・1/2']
+                        ['1' + uniqueScale, '1/4' + uniqueScale, '1' + uniqueScale + '・1/2']
                     )
                 ),
-                Menu(
+                MenuTmp(
                     'menuTitleTwo',
                     Material(
                         ['itemTwoOne', 'itemTwoTwo', 'itemTwoThree'],
-                        ['1'+uniqueScale+'（100g）', '1/4'+uniqueScale+'（100g）', '1'+uniqueScale+'・1/2'+'（100g）']
+                        ['1' + uniqueScale + '（100g）', '1/4' + uniqueScale + '（100g）',
+                         '1' + uniqueScale + '・1/2' + '（100g）']
                     )
                 ),
             ]
@@ -175,33 +248,67 @@ class TestMenuScrapingService(unittest.TestCase):
 
             actualMenuOutput = menuScrapingService.convertMenu(self.menuIdList)
 
-            expectedMenuBase = [
-                [1, 'menuTitleOne'],
-                [2, 'menuTitleTwo'],
+            expectedMenuStruct = [
+                {
+                    'menuRecord': {
+                        'title': 'menuTitleOne'
+                    },
+                    'ingredientRecord': [
+                        {
+                            'item': 'itemOneOne',
+                            'quantity': 1,
+                            'scale': uniqueScale
+                        },
+                        {
+                            'item': 'itemOneTwo',
+                            'quantity': 0.25,
+                            'scale': uniqueScale
+                        },
+                        {
+                            'item': 'itemOneThree',
+                            'quantity': 1.5,
+                            'scale': uniqueScale
+                        },
+                    ],
+                    'seasoningRecord': []
+                },
+                {
+                    'menuRecord': {
+                        'title': 'menuTitleTwo'
+                    },
+                    'ingredientRecord': [
+                        {
+                            'item': 'itemTwoOne',
+                            'quantity': 1,
+                            'scale': uniqueScale
+                        },
+                        {
+                            'item': 'itemTwoTwo',
+                            'quantity': 0.25,
+                            'scale': uniqueScale
+                        },
+                        {
+                            'item': 'itemTwoThree',
+                            'quantity': 1.5,
+                            'scale': uniqueScale
+                        },
+                    ],
+                    'seasoningRecord': []
+                },
             ]
 
-            expectedMenuMaterial = [
-                [1, 1, 'itemOneOne', 1, uniqueScale],
-                [2, 1, 'itemOneTwo', 0.25, uniqueScale],
-                [3, 1, 'itemOneThree', 1.5, uniqueScale],
-                [4, 2, 'itemTwoOne', 1, uniqueScale],
-                [5, 2, 'itemTwoTwo', 0.25, uniqueScale],
-                [6, 2, 'itemTwoThree', 1.5, uniqueScale],
-            ]
-
-            self.assertEqual(expectedMenuBase, actualMenuOutput.menuBase)
-            self.assertEqual(expectedMenuMaterial, actualMenuOutput.menuIngredient)
+            self.assertEqual(expectedMenuStruct, actualMenuOutput)
 
     def test_ingredientAndSeasoning_complex(self):
         menuList = [
-            Menu(
+            MenuTmp(
                 'menuTitleOne',
                 Material(
                     ['itemOneOne', 'itemOneTwo', 'itemOneThree', 'itemOneFour'],
                     ['大さじ1', '小さじ2', '300g', '4箱']
                 )
             ),
-            Menu(
+            MenuTmp(
                 'menuTitleTwo',
                 Material(
                     ['itemTwoOne', 'itemTwoTwo', 'itemTwoThree', 'itemTwoFour'],
@@ -219,28 +326,69 @@ class TestMenuScrapingService(unittest.TestCase):
         TEA_SPOON_UNIT = 5
         CUP = 200
 
-        expectedMenuBase = [
-            [1, 'menuTitleOne'],
-            [2, 'menuTitleTwo'],
+        expectedMenuStruct = [
+            {
+                'menuRecord': {
+                    'title': 'menuTitleOne'
+                },
+                'ingredientRecord': [
+                    {
+                        'item': 'itemOneThree',
+                        'quantity': 300,
+                        'scale': 'g'
+                    },
+                    {
+                        'item': 'itemOneFour',
+                        'quantity': 4,
+                        'scale': '箱'
+                    },
+                ],
+                'seasoningRecord': [
+                    {
+                        'item': 'itemOneOne',
+                        'quantity': TABLE_SPOON_UNIT*1,
+                        'scale': 'ml'
+                    },
+                    {
+                        'item': 'itemOneTwo',
+                        'quantity': TEA_SPOON_UNIT*2,
+                        'scale': 'ml'
+                    },
+                ]
+            },
+            {
+                'menuRecord': {
+                    'title': 'menuTitleTwo'
+                },
+                'ingredientRecord': [
+                    {
+                        'item': 'itemTwoOne',
+                        'quantity': 4,
+                        'scale': '株'
+                    },
+                    {
+                        'item': 'itemTwoTwo',
+                        'quantity': 3,
+                        'scale': 'かけ分'
+                    },
+                ],
+                'seasoningRecord': [
+                    {
+                        'item': 'itemTwoThree',
+                        'quantity': CUP*2,
+                        'scale': 'ml'
+                    },
+                    {
+                        'item': 'itemTwoFour',
+                        'quantity': 1,
+                        'scale': '適量'
+                    },
+                ]
+            },
         ]
 
-        expectedMenuIngredient = [
-            [1, 1, 'itemOneThree', 300, 'g'],
-            [2, 1, 'itemOneFour', 4, '箱'],
-            [3, 2, 'itemTwoOne', 4, '株'],
-            [4, 2, 'itemTwoTwo', 3, 'かけ分'],
-        ]
+        self.assertEqual(expectedMenuStruct, actualMenuOutput)
 
-        expectedMenuSeasoning = [
-            [1, 1, 'itemOneOne', TABLE_SPOON_UNIT * 1, 'ml'],
-            [2, 1, 'itemOneTwo', TEA_SPOON_UNIT * 2, 'ml'],
-            [3, 2, 'itemTwoThree', CUP * 2, 'ml'],
-            [4, 2, 'itemTwoFour', 1, '適量'],
-        ]
-
-        self.assertEqual(expectedMenuBase, actualMenuOutput.menuBase)
-        self.assertEqual(expectedMenuIngredient , actualMenuOutput.menuIngredient)
-        self.assertEqual(expectedMenuSeasoning , actualMenuOutput.menuSeasoning)
 
 if __name__ == '__main__':
     unittest.main()

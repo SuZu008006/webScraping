@@ -1,4 +1,4 @@
-from MenuClass import Menu, Material
+from MenuClass import MenuTmp, Material
 
 
 class MenuScrapingRepository:
@@ -53,7 +53,7 @@ class MenuScrapingRepository:
             menuIngredientQuantity = menuIngredientQuantityLocator.all_inner_texts()
 
             menu.append(
-                Menu(
+                MenuTmp(
                     menuTitle[len(menuTitle) - 1],
                     Material(
                         menuIngredientItem,
