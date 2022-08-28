@@ -14,6 +14,7 @@ class TestMenuScrapingService(unittest.TestCase):
         menuList = [
             MenuTmp(
                 'menuTitleOne',
+                'menuOneImage',
                 Material(
                     ['itemOneOne', 'itemOneTwo', 'itemOneThree', 'itemOneFour'],
                     ['大さじ1', '小さじ2', '小さじ2（10g）', '大さじ1（15g）']
@@ -21,6 +22,7 @@ class TestMenuScrapingService(unittest.TestCase):
             ),
             MenuTmp(
                 'menuTitleTwo',
+                'menuTwoImage',
                 Material(
                     ['itemTwoOne', 'itemTwoTwo', 'itemTwoThree', 'itemTwoFour'],
                     ['大さじ1・1/2', '小さじ2・1/4', '大さじ1/2', '小さじ1/4']
@@ -39,7 +41,8 @@ class TestMenuScrapingService(unittest.TestCase):
         expectedMenuStruct = [
             {
                 'menuRecord': {
-                    'title': 'menuTitleOne'
+                    'title': 'menuTitleOne',
+                    'image': 'menuOneImage',
                 },
                 'ingredientRecord': [],
                 'seasoningRecord': [
@@ -67,7 +70,8 @@ class TestMenuScrapingService(unittest.TestCase):
             },
             {
                 'menuRecord': {
-                    'title': 'menuTitleTwo'
+                    'title': 'menuTitleTwo',
+                    'image': 'menuTwoImage',
                 },
                 'ingredientRecord': [],
                 'seasoningRecord': [
@@ -101,6 +105,7 @@ class TestMenuScrapingService(unittest.TestCase):
         menuList = [
             MenuTmp(
                 'menuTitleOne',
+                'menuOneImage',
                 Material(
                     ['itemOneOne', 'itemOneTwo', 'itemOneThree'],
                     ['1カップ', '1/4カップ', '1カップ・1/2']
@@ -118,7 +123,8 @@ class TestMenuScrapingService(unittest.TestCase):
         expectedMenuStruct = [
             {
                 'menuRecord': {
-                    'title': 'menuTitleOne'
+                    'title': 'menuTitleOne',
+                    'image': 'menuOneImage',
                 },
                 'ingredientRecord': [],
                 'seasoningRecord': [
@@ -147,6 +153,7 @@ class TestMenuScrapingService(unittest.TestCase):
         menuList = [
             MenuTmp(
                 'menuTitleOne',
+                'menuOneImage',
                 Material(
                     ['itemOneOne', 'itemOneTwo'],
                     ['適量', '少々']
@@ -162,7 +169,8 @@ class TestMenuScrapingService(unittest.TestCase):
         expectedMenuStruct = [
             {
                 'menuRecord': {
-                    'title': 'menuTitleOne'
+                    'title': 'menuTitleOne',
+                    'image': 'menuOneImage',
                 },
                 'ingredientRecord': [],
                 'seasoningRecord': [
@@ -186,6 +194,7 @@ class TestMenuScrapingService(unittest.TestCase):
         menuList = [
             MenuTmp(
                 'menuTitleOne',
+                'menuOneImage',
                 Material(
                     ['itemOneOne', 'itemOneTwo'],
                     ['100g', '200g']
@@ -201,7 +210,8 @@ class TestMenuScrapingService(unittest.TestCase):
         expectedMenuStruct = [
             {
                 'menuRecord': {
-                    'title': 'menuTitleOne'
+                    'title': 'menuTitleOne',
+                    'image': 'menuOneImage',
                 },
                 'ingredientRecord': [
                     {
@@ -228,6 +238,7 @@ class TestMenuScrapingService(unittest.TestCase):
             menuList = [
                 MenuTmp(
                     'menuTitleOne',
+                    'menuOneImage',
                     Material(
                         ['itemOneOne', 'itemOneTwo', 'itemOneThree'],
                         ['1' + uniqueScale, '1/4' + uniqueScale, '1' + uniqueScale + '・1/2']
@@ -235,6 +246,7 @@ class TestMenuScrapingService(unittest.TestCase):
                 ),
                 MenuTmp(
                     'menuTitleTwo',
+                    'menuTwoImage',
                     Material(
                         ['itemTwoOne', 'itemTwoTwo', 'itemTwoThree'],
                         ['1' + uniqueScale + '（100g）', '1/4' + uniqueScale + '（100g）',
@@ -251,7 +263,8 @@ class TestMenuScrapingService(unittest.TestCase):
             expectedMenuStruct = [
                 {
                     'menuRecord': {
-                        'title': 'menuTitleOne'
+                        'title': 'menuTitleOne',
+                        'image': 'menuOneImage',
                     },
                     'ingredientRecord': [
                         {
@@ -274,7 +287,8 @@ class TestMenuScrapingService(unittest.TestCase):
                 },
                 {
                     'menuRecord': {
-                        'title': 'menuTitleTwo'
+                        'title': 'menuTitleTwo',
+                        'image': 'menuTwoImage',
                     },
                     'ingredientRecord': [
                         {
@@ -303,6 +317,7 @@ class TestMenuScrapingService(unittest.TestCase):
         menuList = [
             MenuTmp(
                 'menuTitleOne',
+                'menuOneImage',
                 Material(
                     ['itemOneOne', 'itemOneTwo', 'itemOneThree', 'itemOneFour'],
                     ['大さじ1', '小さじ2', '300g', '4箱']
@@ -310,6 +325,7 @@ class TestMenuScrapingService(unittest.TestCase):
             ),
             MenuTmp(
                 'menuTitleTwo',
+                'menuTwoImage',
                 Material(
                     ['itemTwoOne', 'itemTwoTwo', 'itemTwoThree', 'itemTwoFour'],
                     ['4株', '3かけ分', '2カップ', '適量']
@@ -329,7 +345,8 @@ class TestMenuScrapingService(unittest.TestCase):
         expectedMenuStruct = [
             {
                 'menuRecord': {
-                    'title': 'menuTitleOne'
+                    'title': 'menuTitleOne',
+                    'image': 'menuOneImage',
                 },
                 'ingredientRecord': [
                     {
@@ -358,7 +375,8 @@ class TestMenuScrapingService(unittest.TestCase):
             },
             {
                 'menuRecord': {
-                    'title': 'menuTitleTwo'
+                    'title': 'menuTitleTwo',
+                    'image': 'menuTwoImage',
                 },
                 'ingredientRecord': [
                     {

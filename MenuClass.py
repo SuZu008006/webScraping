@@ -7,8 +7,9 @@ class MenuStructTmp:
         self.menu = seasoning
 
 class MenuTmp:
-    def __init__(self, title, material):
+    def __init__(self, title, image, material):
         self.title = title
+        self.image = image
         self.Material = material
 
 
@@ -25,8 +26,9 @@ class MenuStruct:
         self.seasoningRecord = seasoningRecord
 
     class Menu:
-        def __init__(self, title):
+        def __init__(self, title, image):
             self.title = title
+            self.image = image
     class Ingredient:
         def __init__(self, item, quantity, scale):
             self.item = item

@@ -11,7 +11,7 @@ class TestMenuScrapingController(unittest.TestCase):
         self.spyStubMenuScrapingService = SpyStubMenuScrapingService([])
 
     def test_menuStructJson(self):
-        menu_returnValue = 'menuTitleOne'
+        menu_returnValue = ['menuTitleOne','menuImageOne']
         ingredient_returnValue = 11
 
         self.spyStubMenuScrapingService.menu_returnValue = menu_returnValue

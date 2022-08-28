@@ -33,6 +33,10 @@ def test_menuScrapingRepository(page: Page):
     menuIdList = [705651, 708962]
 
     expectedMenuTitle = ['鶏のから揚げ', '鶏胸肉のうま酢煮']
+    expectedMenuImageUrl = [
+        'https://park.ajinomoto.co.jp/wp-content/uploads/2018/03/705651.jpeg',
+        'https://park.ajinomoto.co.jp/wp-content/uploads/2018/03/708962.jpeg'
+    ]
     expectedMenuIngredientItem = ['鶏もも肉・または鶏ももから揚げ用肉', '鶏むね肉']
     expectedMenuIngredientQuantity = ['1枚（250g）', '300g']
 
@@ -40,5 +44,6 @@ def test_menuScrapingRepository(page: Page):
 
     for index, menuId in enumerate(menuIdList):
         assert menuList[index].title == expectedMenuTitle[index]
+        assert menuList[index].image == expectedMenuImageUrl[index]
         assert menuList[index].Material.item[0] == expectedMenuIngredientItem[index]
         assert menuList[index].Material.content[0] == expectedMenuIngredientQuantity[index]

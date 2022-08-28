@@ -117,7 +117,7 @@ class MenuScrapingService:
 
             menuStruct.append(
                 MenuStruct(
-                    MenuStruct.Menu(menu.title).__dict__,
+                    MenuStruct.Menu(menu.title, menu.image).__dict__,
                     ingredient,
                     seasoning,
                 ).__dict__

@@ -1,10 +1,11 @@
+import re
+
 from MenuClass import MenuTmp, Material
 
 
 class MenuScrapingRepository:
     def __init__(self, page):
         self.page = page
-
 
     def getMenu(self, menuIdList):
         menu = []
@@ -32,6 +33,12 @@ class MenuScrapingRepository:
             )
             menuTitle = menuTitleLocator.all_inner_texts()
 
+            menuImageLocator = self.page.query_selector(".inImage")
+            menuImage = menuImageLocator.inner_html()
+
+            pattern = "https?://[\w/:%#\$&\?\(\)~\.=\+\-]+"
+            urlList = re.findall(pattern, str(menuImage))
+
             menuIngredientItemLocator = self.page.locator(
                 recipeCardXpath +
                 "div[@class ='recipeCardSpOrderWrap']/"
@@ -55,6 +62,7 @@ class MenuScrapingRepository:
             menu.append(
                 MenuTmp(
                     menuTitle[len(menuTitle) - 1],
+                    urlList[0],
                     Material(
                         menuIngredientItem,
                         menuIngredientQuantity,
