@@ -18,7 +18,8 @@ class TestMenuScrapingService(unittest.TestCase):
                 Material(
                     ['itemOneOne', 'itemOneTwo', 'itemOneThree', 'itemOneFour'],
                     ['大さじ1', '小さじ2', '小さじ2（10g）', '大さじ1（15g）']
-                )
+                ),
+                []
             ),
             MenuTmp(
                 'menuTitleTwo',
@@ -26,7 +27,8 @@ class TestMenuScrapingService(unittest.TestCase):
                 Material(
                     ['itemTwoOne', 'itemTwoTwo', 'itemTwoThree', 'itemTwoFour'],
                     ['大さじ1・1/2', '小さじ2・1/4', '大さじ1/2', '小さじ1/4']
-                )
+                ),
+                []
             )
         ]
         self.spyStubMenuScrapingRepository.menuList_returnValue = menuList
@@ -48,25 +50,26 @@ class TestMenuScrapingService(unittest.TestCase):
                 'seasoningRecord': [
                     {
                         'item': 'itemOneOne',
-                        'quantity': TABLE_SPOON_UNIT*1,
+                        'quantity': TABLE_SPOON_UNIT * 1,
                         'scale': 'ml'
                     },
                     {
                         'item': 'itemOneTwo',
-                        'quantity': TEA_SPOON_UNIT*2,
+                        'quantity': TEA_SPOON_UNIT * 2,
                         'scale': 'ml'
                     },
                     {
                         'item': 'itemOneThree',
-                        'quantity': TEA_SPOON_UNIT*2,
+                        'quantity': TEA_SPOON_UNIT * 2,
                         'scale': 'ml'
                     },
                     {
                         'item': 'itemOneFour',
-                        'quantity': TABLE_SPOON_UNIT*1,
+                        'quantity': TABLE_SPOON_UNIT * 1,
                         'scale': 'ml'
                     }
-                ]
+                ],
+                'makeRecord': [],
             },
             {
                 'menuRecord': {
@@ -77,25 +80,26 @@ class TestMenuScrapingService(unittest.TestCase):
                 'seasoningRecord': [
                     {
                         'item': 'itemTwoOne',
-                        'quantity': TABLE_SPOON_UNIT*1.5,
+                        'quantity': TABLE_SPOON_UNIT * 1.5,
                         'scale': 'ml'
                     },
                     {
                         'item': 'itemTwoTwo',
-                        'quantity': TEA_SPOON_UNIT*2.25,
+                        'quantity': TEA_SPOON_UNIT * 2.25,
                         'scale': 'ml'
                     },
                     {
                         'item': 'itemTwoThree',
-                        'quantity': TABLE_SPOON_UNIT*0.5,
+                        'quantity': TABLE_SPOON_UNIT * 0.5,
                         'scale': 'ml'
                     },
                     {
                         'item': 'itemTwoFour',
-                        'quantity': TEA_SPOON_UNIT*0.25,
+                        'quantity': TEA_SPOON_UNIT * 0.25,
                         'scale': 'ml'
                     }
-                ]
+                ],
+                'makeRecord': [],
             }
         ]
 
@@ -109,7 +113,8 @@ class TestMenuScrapingService(unittest.TestCase):
                 Material(
                     ['itemOneOne', 'itemOneTwo', 'itemOneThree'],
                     ['1カップ', '1/4カップ', '1カップ・1/2']
-                )
+                ),
+                [],
             ),
         ]
         self.spyStubMenuScrapingRepository.menuList_returnValue = menuList
@@ -143,7 +148,8 @@ class TestMenuScrapingService(unittest.TestCase):
                         'quantity': CUP * 1.5,
                         'scale': 'ml'
                     },
-                ]
+                ],
+                'makeRecord': [],
             },
         ]
 
@@ -157,7 +163,8 @@ class TestMenuScrapingService(unittest.TestCase):
                 Material(
                     ['itemOneOne', 'itemOneTwo'],
                     ['適量', '少々']
-                )
+                ),
+                []
             ),
         ]
         self.spyStubMenuScrapingRepository.menuList_returnValue = menuList
@@ -184,7 +191,8 @@ class TestMenuScrapingService(unittest.TestCase):
                         'quantity': 1,
                         'scale': '少々'
                     },
-                ]
+                ],
+                'makeRecord': [],
             },
         ]
 
@@ -198,7 +206,8 @@ class TestMenuScrapingService(unittest.TestCase):
                 Material(
                     ['itemOneOne', 'itemOneTwo'],
                     ['100g', '200g']
-                )
+                ),
+                []
             ),
         ]
         self.spyStubMenuScrapingRepository.menuList_returnValue = menuList
@@ -225,7 +234,8 @@ class TestMenuScrapingService(unittest.TestCase):
                         'scale': 'g'
                     },
                 ],
-                'seasoningRecord': []
+                'seasoningRecord': [],
+                'makeRecord': [],
             },
         ]
 
@@ -242,7 +252,8 @@ class TestMenuScrapingService(unittest.TestCase):
                     Material(
                         ['itemOneOne', 'itemOneTwo', 'itemOneThree'],
                         ['1' + uniqueScale, '1/4' + uniqueScale, '1' + uniqueScale + '・1/2']
-                    )
+                    ),
+                    [],
                 ),
                 MenuTmp(
                     'menuTitleTwo',
@@ -251,7 +262,8 @@ class TestMenuScrapingService(unittest.TestCase):
                         ['itemTwoOne', 'itemTwoTwo', 'itemTwoThree'],
                         ['1' + uniqueScale + '（100g）', '1/4' + uniqueScale + '（100g）',
                          '1' + uniqueScale + '・1/2' + '（100g）']
-                    )
+                    ),
+                    [],
                 ),
             ]
             self.spyStubMenuScrapingRepository.menuList_returnValue = menuList
@@ -283,7 +295,8 @@ class TestMenuScrapingService(unittest.TestCase):
                             'scale': uniqueScale
                         },
                     ],
-                    'seasoningRecord': []
+                    'seasoningRecord': [],
+                    'makeRecord': [],
                 },
                 {
                     'menuRecord': {
@@ -307,7 +320,8 @@ class TestMenuScrapingService(unittest.TestCase):
                             'scale': uniqueScale
                         },
                     ],
-                    'seasoningRecord': []
+                    'seasoningRecord': [],
+                    'makeRecord': [],
                 },
             ]
 
@@ -321,7 +335,8 @@ class TestMenuScrapingService(unittest.TestCase):
                 Material(
                     ['itemOneOne', 'itemOneTwo', 'itemOneThree', 'itemOneFour'],
                     ['大さじ1', '小さじ2', '300g', '4箱']
-                )
+                ),
+                []
             ),
             MenuTmp(
                 'menuTitleTwo',
@@ -329,7 +344,8 @@ class TestMenuScrapingService(unittest.TestCase):
                 Material(
                     ['itemTwoOne', 'itemTwoTwo', 'itemTwoThree', 'itemTwoFour'],
                     ['4株', '3かけ分', '2カップ', '適量']
-                )
+                ),
+                []
             )
         ]
         self.spyStubMenuScrapingRepository.menuList_returnValue = menuList
@@ -363,15 +379,16 @@ class TestMenuScrapingService(unittest.TestCase):
                 'seasoningRecord': [
                     {
                         'item': 'itemOneOne',
-                        'quantity': TABLE_SPOON_UNIT*1,
+                        'quantity': TABLE_SPOON_UNIT * 1,
                         'scale': 'ml'
                     },
                     {
                         'item': 'itemOneTwo',
-                        'quantity': TEA_SPOON_UNIT*2,
+                        'quantity': TEA_SPOON_UNIT * 2,
                         'scale': 'ml'
                     },
-                ]
+                ],
+                'makeRecord': [],
             },
             {
                 'menuRecord': {
@@ -393,7 +410,7 @@ class TestMenuScrapingService(unittest.TestCase):
                 'seasoningRecord': [
                     {
                         'item': 'itemTwoThree',
-                        'quantity': CUP*2,
+                        'quantity': CUP * 2,
                         'scale': 'ml'
                     },
                     {
@@ -401,7 +418,53 @@ class TestMenuScrapingService(unittest.TestCase):
                         'quantity': 1,
                         'scale': '適量'
                     },
-                ]
+                ],
+                'makeRecord': [],
+            },
+        ]
+
+        self.assertEqual(expectedMenuStruct, actualMenuOutput)
+
+    def test_make_nonInitialNumber(self):
+        menuList = [
+            MenuTmp(
+                '',
+                '',
+                Material([],[]),
+                ['1\nmakeOneOne','2\nmakeOneTwo'],
+            ),
+            MenuTmp(
+                '',
+                '',
+                Material([],[]),
+                ['1\nmakeTwoOne', '2\nmakeTwoTwo'],
+            )
+        ]
+        self.spyStubMenuScrapingRepository.menuList_returnValue = menuList
+
+        menuScrapingService = MenuScrapingService(self.spyStubMenuScrapingRepository)
+
+        actualMenuOutput = menuScrapingService.convertMenu(self.menuIdList)
+
+
+        expectedMenuStruct = [
+            {
+                'menuRecord': {
+                    'title': '',
+                    'image': '',
+                },
+                'ingredientRecord': [],
+                'seasoningRecord': [],
+                'makeRecord': ['makeOneOne','makeOneTwo'],
+            },
+            {
+                'menuRecord': {
+                    'title': '',
+                    'image': '',
+                },
+                'ingredientRecord': [],
+                'seasoningRecord': [],
+                'makeRecord': ['makeTwoOne','makeTwoTwo'],
             },
         ]
 

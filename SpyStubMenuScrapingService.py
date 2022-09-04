@@ -31,6 +31,7 @@ class SpyStubMenuScrapingService:
                         quantity=self.ingredient_returnValue,
                         scale="test3",
                     ).__dict__,
-                ]
+                ],
+                ["make1","make2"]
             ).__dict__,
         ]

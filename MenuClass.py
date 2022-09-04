@@ -7,10 +7,11 @@ class MenuStructTmp:
         self.menu = seasoning
 
 class MenuTmp:
-    def __init__(self, title, image, material):
+    def __init__(self, title, image, material, make):
         self.title = title
         self.image = image
         self.Material = material
+        self.make = make
 
 
 class Material:
@@ -20,10 +21,11 @@ class Material:
 
 
 class MenuStruct:
-    def __init__(self, menuRecord, ingredientRecord, seasoningRecord):
+    def __init__(self, menuRecord, ingredientRecord, seasoningRecord, makeRecord):
         self.menuRecord = menuRecord
         self.ingredientRecord = ingredientRecord
         self.seasoningRecord = seasoningRecord
+        self.makeRecord = makeRecord
 
     class Menu:
         def __init__(self, title, image):

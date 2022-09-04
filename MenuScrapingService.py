@@ -85,6 +85,7 @@ class MenuScrapingService:
         for menuIndex, menu in enumerate(menuList):
             ingredient = []
             seasoning = []
+            make = []
 
             for materialIndex, material in enumerate(menu.Material.item):
                 materialContent = divideContentOnQuantityAndScale(
@@ -115,11 +116,16 @@ class MenuScrapingService:
                         ).__dict__
                     )
 
+            for index, it in enumerate(menu.make):
+                make.append(it[2:])
+
+
             menuStruct.append(
                 MenuStruct(
                     MenuStruct.Menu(menu.title, menu.image).__dict__,
                     ingredient,
                     seasoning,
+                    make,
                 ).__dict__
             )
 

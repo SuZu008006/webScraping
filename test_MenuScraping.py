@@ -27,7 +27,7 @@ def test_menuScraping(page: Page):
     menuScrapingController = MenuScrapingController(menuScrapingService, menuIdList)
     menuScrapingController.saveMenuStruct()
 
-@pytest.mark.skipif(True, reason="不用意なスクレイピングの防止のため")
+# @pytest.mark.skipif(True, reason="不用意なスクレイピングの防止のため")
 def test_menuScrapingRepository(page: Page):
     menuScrapingRepository = MenuScrapingRepository(page)
     menuIdList = [705651, 708962]
@@ -39,6 +39,10 @@ def test_menuScrapingRepository(page: Page):
     ]
     expectedMenuIngredientItem = ['鶏もも肉・または鶏ももから揚げ用肉', '鶏むね肉']
     expectedMenuIngredientQuantity = ['1枚（250g）', '300g']
+    expectedMenuMake = [
+        '1\n鶏肉はひと口大に切る。\nボウルに鶏肉、「丸鶏がらスープ」、Ａを入れ、汁気がなくなるまでもみ込む。',
+        '1\n鶏肉は余分な脂を取り、ひと口大に切る。酒をもみ込み、しばらくおいて薄力粉をまぶす。'
+    ]
 
     menuList = menuScrapingRepository.getMenu(menuIdList)
 
@@ -47,3 +51,4 @@ def test_menuScrapingRepository(page: Page):
         assert menuList[index].image == expectedMenuImageUrl[index]
         assert menuList[index].Material.item[0] == expectedMenuIngredientItem[index]
         assert menuList[index].Material.content[0] == expectedMenuIngredientQuantity[index]
+        assert menuList[index].make[0] == expectedMenuMake[index]

@@ -59,6 +59,16 @@ class MenuScrapingRepository:
             )
             menuIngredientQuantity = menuIngredientQuantityLocator.all_inner_texts()
 
+            menuMakeListLocator = self.page.locator(
+                recipeCardXpath +
+                "div[@class ='recipeCardSpOrderWrap']/"
+                "div[@class ='wrap820 recipeCardSpOrder4']/"
+                "div[@class ='recipeMakeType02']/"
+                "div[@class ='makeList']/"
+                "ol/li"
+            )
+            menuMakeList = menuMakeListLocator.all_inner_texts()
+
             menu.append(
                 MenuTmp(
                     menuTitle[len(menuTitle) - 1],
@@ -66,7 +76,8 @@ class MenuScrapingRepository:
                     Material(
                         menuIngredientItem,
                         menuIngredientQuantity,
-                    )
+                    ),
+                    menuMakeList,
                 )
             )
 
