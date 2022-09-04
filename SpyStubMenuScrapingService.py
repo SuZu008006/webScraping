@@ -32,6 +32,9 @@ class SpyStubMenuScrapingService:
                         scale="test3",
                     ).__dict__,
                 ],
-                ["make1","make2"]
+                [
+                    MenuStruct.Make(content="makeOne").__dict__,
+                    MenuStruct.Make(content="makeTwo").__dict__,
+                ]
             ).__dict__,
         ]

@@ -27,7 +27,7 @@ def test_menuScraping(page: Page):
     menuScrapingController = MenuScrapingController(menuScrapingService, menuIdList)
     menuScrapingController.saveMenuStruct()
 
-# @pytest.mark.skipif(True, reason="不用意なスクレイピングの防止のため")
+@pytest.mark.skipif(True, reason="不用意なスクレイピングの防止のため")
 def test_menuScrapingRepository(page: Page):
     menuScrapingRepository = MenuScrapingRepository(page)
     menuIdList = [705651, 708962]
@@ -49,6 +49,6 @@ def test_menuScrapingRepository(page: Page):
     for index, menuId in enumerate(menuIdList):
         assert menuList[index].title == expectedMenuTitle[index]
         assert menuList[index].image == expectedMenuImageUrl[index]
-        assert menuList[index].Material.item[0] == expectedMenuIngredientItem[index]
-        assert menuList[index].Material.content[0] == expectedMenuIngredientQuantity[index]
-        assert menuList[index].make[0] == expectedMenuMake[index]
+        assert menuList[index].material.item[0] == expectedMenuIngredientItem[index]
+        assert menuList[index].material.content[0] == expectedMenuIngredientQuantity[index]
+        assert menuList[index].make.content[0] == expectedMenuMake[index]

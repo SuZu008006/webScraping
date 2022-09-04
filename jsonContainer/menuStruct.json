@@ -24,8 +24,12 @@
             }
         ],
         "makeRecord": [
-            "make1",
-            "make2"
+            {
+                "content": "makeOne"
+            },
+            {
+                "content": "makeTwo"
+            }
         ]
     }
 ]

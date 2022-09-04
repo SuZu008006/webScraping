@@ -1,6 +1,6 @@
 import re
 
-from MenuClass import MenuTmp, Material
+from MenuClass import MenuTmp
 
 
 class MenuScrapingRepository:
@@ -73,11 +73,13 @@ class MenuScrapingRepository:
                 MenuTmp(
                     menuTitle[len(menuTitle) - 1],
                     urlList[0],
-                    Material(
+                    MenuTmp.Material(
                         menuIngredientItem,
                         menuIngredientQuantity,
                     ),
-                    menuMakeList,
+                    MenuTmp.Make(
+                        menuMakeList,
+                    )
                 )
             )
 

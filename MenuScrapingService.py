@@ -1,3 +1,4 @@
+import pprint
 import re
 
 from MenuClass import MenuStruct
@@ -80,16 +81,13 @@ class MenuScrapingService:
             return MaterialContent(quantity, scale)
 
         menuStruct = []
-
         menuList = self.menuScrapingRepository.getMenu(menuIdList)
         for menuIndex, menu in enumerate(menuList):
             ingredient = []
             seasoning = []
-            make = []
-
-            for materialIndex, material in enumerate(menu.Material.item):
+            for materialIndex, material in enumerate(menu.material.item):
                 materialContent = divideContentOnQuantityAndScale(
-                    menu.Material.content[materialIndex]
+                    menu.material.content[materialIndex]
                 )
 
                 seasoningPatternList = 'ml|適量|少々'
@@ -116,8 +114,11 @@ class MenuScrapingService:
                         ).__dict__
                     )
 
-            for index, it in enumerate(menu.make):
-                make.append(it[2:])
+            make = []
+            for index, it in enumerate(menu.make.content):
+                make.append(
+                    MenuStruct.Make(it[2:]).__dict__
+                )
 
 
             menuStruct.append(

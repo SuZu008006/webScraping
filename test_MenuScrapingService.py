@@ -1,6 +1,6 @@
 import unittest
 
-from MenuClass import MenuTmp, Material
+from MenuClass import MenuTmp
 from MenuScrapingService import MenuScrapingService
 from SpyStubMenuScrapingRepository import SpyStubMenuScrapingRepository
 
@@ -13,22 +13,26 @@ class TestMenuScrapingService(unittest.TestCase):
     def test_seasoning_spoonScale(self):
         menuList = [
             MenuTmp(
-                'menuTitleOne',
-                'menuOneImage',
-                Material(
+                '',
+                '',
+                MenuTmp.Material(
                     ['itemOneOne', 'itemOneTwo', 'itemOneThree', 'itemOneFour'],
                     ['大さじ1', '小さじ2', '小さじ2（10g）', '大さじ1（15g）']
                 ),
-                []
+                MenuTmp.Make(
+                    ['', '']
+                )
             ),
             MenuTmp(
-                'menuTitleTwo',
-                'menuTwoImage',
-                Material(
+                '',
+                '',
+                MenuTmp.Material(
                     ['itemTwoOne', 'itemTwoTwo', 'itemTwoThree', 'itemTwoFour'],
                     ['大さじ1・1/2', '小さじ2・1/4', '大さじ1/2', '小さじ1/4']
                 ),
-                []
+                MenuTmp.Make(
+                    ['', '']
+                )
             )
         ]
         self.spyStubMenuScrapingRepository.menuList_returnValue = menuList
@@ -43,8 +47,8 @@ class TestMenuScrapingService(unittest.TestCase):
         expectedMenuStruct = [
             {
                 'menuRecord': {
-                    'title': 'menuTitleOne',
-                    'image': 'menuOneImage',
+                    'title': '',
+                    'image': '',
                 },
                 'ingredientRecord': [],
                 'seasoningRecord': [
@@ -69,12 +73,15 @@ class TestMenuScrapingService(unittest.TestCase):
                         'scale': 'ml'
                     }
                 ],
-                'makeRecord': [],
+                'makeRecord': [
+                    {'content': '', },
+                    {'content': '', },
+                ],
             },
             {
                 'menuRecord': {
-                    'title': 'menuTitleTwo',
-                    'image': 'menuTwoImage',
+                    'title': '',
+                    'image': '',
                 },
                 'ingredientRecord': [],
                 'seasoningRecord': [
@@ -99,7 +106,10 @@ class TestMenuScrapingService(unittest.TestCase):
                         'scale': 'ml'
                     }
                 ],
-                'makeRecord': [],
+                'makeRecord': [
+                    {'content': '', },
+                    {'content': '', },
+                ],
             }
         ]
 
@@ -110,11 +120,13 @@ class TestMenuScrapingService(unittest.TestCase):
             MenuTmp(
                 'menuTitleOne',
                 'menuOneImage',
-                Material(
+                MenuTmp.Material(
                     ['itemOneOne', 'itemOneTwo', 'itemOneThree'],
                     ['1カップ', '1/4カップ', '1カップ・1/2']
                 ),
-                [],
+                MenuTmp.Make(
+                    ['', '']
+                ),
             ),
         ]
         self.spyStubMenuScrapingRepository.menuList_returnValue = menuList
@@ -149,7 +161,10 @@ class TestMenuScrapingService(unittest.TestCase):
                         'scale': 'ml'
                     },
                 ],
-                'makeRecord': [],
+                'makeRecord': [
+                    {'content': '', },
+                    {'content': '', },
+                ],
             },
         ]
 
@@ -160,11 +175,13 @@ class TestMenuScrapingService(unittest.TestCase):
             MenuTmp(
                 'menuTitleOne',
                 'menuOneImage',
-                Material(
+                MenuTmp.Material(
                     ['itemOneOne', 'itemOneTwo'],
                     ['適量', '少々']
                 ),
-                []
+                MenuTmp.Make(
+                    ['', '']
+                ),
             ),
         ]
         self.spyStubMenuScrapingRepository.menuList_returnValue = menuList
@@ -192,7 +209,10 @@ class TestMenuScrapingService(unittest.TestCase):
                         'scale': '少々'
                     },
                 ],
-                'makeRecord': [],
+                'makeRecord': [
+                    {'content': '', },
+                    {'content': '', },
+                ],
             },
         ]
 
@@ -203,11 +223,13 @@ class TestMenuScrapingService(unittest.TestCase):
             MenuTmp(
                 'menuTitleOne',
                 'menuOneImage',
-                Material(
+                MenuTmp.Material(
                     ['itemOneOne', 'itemOneTwo'],
                     ['100g', '200g']
                 ),
-                []
+                MenuTmp.Make(
+                    ['', '']
+                ),
             ),
         ]
         self.spyStubMenuScrapingRepository.menuList_returnValue = menuList
@@ -235,7 +257,10 @@ class TestMenuScrapingService(unittest.TestCase):
                     },
                 ],
                 'seasoningRecord': [],
-                'makeRecord': [],
+                'makeRecord': [
+                    {'content': '', },
+                    {'content': '', },
+                ],
             },
         ]
 
@@ -249,21 +274,25 @@ class TestMenuScrapingService(unittest.TestCase):
                 MenuTmp(
                     'menuTitleOne',
                     'menuOneImage',
-                    Material(
+                    MenuTmp.Material(
                         ['itemOneOne', 'itemOneTwo', 'itemOneThree'],
                         ['1' + uniqueScale, '1/4' + uniqueScale, '1' + uniqueScale + '・1/2']
                     ),
-                    [],
+                    MenuTmp.Make(
+                        ['', '']
+                    ),
                 ),
                 MenuTmp(
                     'menuTitleTwo',
                     'menuTwoImage',
-                    Material(
+                    MenuTmp.Material(
                         ['itemTwoOne', 'itemTwoTwo', 'itemTwoThree'],
                         ['1' + uniqueScale + '（100g）', '1/4' + uniqueScale + '（100g）',
                          '1' + uniqueScale + '・1/2' + '（100g）']
                     ),
-                    [],
+                    MenuTmp.Make(
+                        ['', '']
+                    ),
                 ),
             ]
             self.spyStubMenuScrapingRepository.menuList_returnValue = menuList
@@ -296,7 +325,10 @@ class TestMenuScrapingService(unittest.TestCase):
                         },
                     ],
                     'seasoningRecord': [],
-                    'makeRecord': [],
+                    'makeRecord': [
+                        {'content': '', },
+                        {'content': '', },
+                    ],
                 },
                 {
                     'menuRecord': {
@@ -321,7 +353,10 @@ class TestMenuScrapingService(unittest.TestCase):
                         },
                     ],
                     'seasoningRecord': [],
-                    'makeRecord': [],
+                    'makeRecord': [
+                        {'content': '', },
+                        {'content': '', },
+                    ],
                 },
             ]
 
@@ -332,20 +367,24 @@ class TestMenuScrapingService(unittest.TestCase):
             MenuTmp(
                 'menuTitleOne',
                 'menuOneImage',
-                Material(
+                MenuTmp.Material(
                     ['itemOneOne', 'itemOneTwo', 'itemOneThree', 'itemOneFour'],
                     ['大さじ1', '小さじ2', '300g', '4箱']
                 ),
-                []
+                MenuTmp.Make(
+                    ['', '']
+                ),
             ),
             MenuTmp(
                 'menuTitleTwo',
                 'menuTwoImage',
-                Material(
+                MenuTmp.Material(
                     ['itemTwoOne', 'itemTwoTwo', 'itemTwoThree', 'itemTwoFour'],
                     ['4株', '3かけ分', '2カップ', '適量']
                 ),
-                []
+                MenuTmp.Make(
+                    ['', '']
+                ),
             )
         ]
         self.spyStubMenuScrapingRepository.menuList_returnValue = menuList
@@ -388,7 +427,10 @@ class TestMenuScrapingService(unittest.TestCase):
                         'scale': 'ml'
                     },
                 ],
-                'makeRecord': [],
+                'makeRecord': [
+                    {'content': '', },
+                    {'content': '', },
+                ],
             },
             {
                 'menuRecord': {
@@ -419,7 +461,10 @@ class TestMenuScrapingService(unittest.TestCase):
                         'scale': '適量'
                     },
                 ],
-                'makeRecord': [],
+                'makeRecord': [
+                    {'content': '', },
+                    {'content': '', },
+                ],
             },
         ]
 
@@ -430,14 +475,18 @@ class TestMenuScrapingService(unittest.TestCase):
             MenuTmp(
                 '',
                 '',
-                Material([],[]),
-                ['1\nmakeOneOne','2\nmakeOneTwo'],
+                MenuTmp.Material([], []),
+                MenuTmp.Make(
+                    ['1\nmakeOneOne', '2\nmakeOneTwo'],
+                ),
             ),
             MenuTmp(
                 '',
                 '',
-                Material([],[]),
-                ['1\nmakeTwoOne', '2\nmakeTwoTwo'],
+                MenuTmp.Material([], []),
+                MenuTmp.Make(
+                    ['1\nmakeTwoOne', '2\nmakeTwoTwo'],
+                ),
             )
         ]
         self.spyStubMenuScrapingRepository.menuList_returnValue = menuList
@@ -445,7 +494,6 @@ class TestMenuScrapingService(unittest.TestCase):
         menuScrapingService = MenuScrapingService(self.spyStubMenuScrapingRepository)
 
         actualMenuOutput = menuScrapingService.convertMenu(self.menuIdList)
-
 
         expectedMenuStruct = [
             {
@@ -455,7 +503,10 @@ class TestMenuScrapingService(unittest.TestCase):
                 },
                 'ingredientRecord': [],
                 'seasoningRecord': [],
-                'makeRecord': ['makeOneOne','makeOneTwo'],
+                'makeRecord': [
+                    {'content': 'makeOneOne', },
+                    {'content': 'makeOneTwo', },
+                ],
             },
             {
                 'menuRecord': {
@@ -464,7 +515,10 @@ class TestMenuScrapingService(unittest.TestCase):
                 },
                 'ingredientRecord': [],
                 'seasoningRecord': [],
-                'makeRecord': ['makeTwoOne','makeTwoTwo'],
+                'makeRecord': [
+                    {'content': 'makeTwoOne', },
+                    {'content': 'makeTwoTwo', },
+                ],
             },
         ]
 
