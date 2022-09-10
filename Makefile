@@ -2,4 +2,4 @@ start:
 	python main.py
 
 test:
-	pytest ./
+	pip freeze > requirements.txt && pytest ./
