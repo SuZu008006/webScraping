@@ -1,3 +1,6 @@
+setup:
+	playwright install
+
 start:
 	python main.py
 
